@@ -6,7 +6,7 @@ import (
 )
 
 func DirectWrite(path string, jsonObj map[string]interface{}, newValue interface{}) map[string]interface{} {
-	keys := strings.Split(path, "->")
+	keys := strings.Split(path, ".")
 
 	// Traverse the map and retrieve the sub-map at the given path
 	subMap := jsonObj
@@ -52,7 +52,7 @@ func replaceSubMap(m map[string]interface{}, keys []string, newSubMap map[string
 
 func DirectRead(jsonPath string, jsonObj map[string]interface{}) (interface{}, error) {
 	// Split the path into individual keys
-	keys := strings.Split(jsonPath, "->")
+	keys := strings.Split(jsonPath, ".")
 
 	// Traverse the JSON object using the keys in the path
 	for i, key := range keys {
@@ -68,9 +68,8 @@ func DirectRead(jsonPath string, jsonObj map[string]interface{}) (interface{}, e
 		}
 
 		// Otherwise, continue traversing the JSON object
-		var ok2 bool
-		jsonObj, ok2 = val.(map[string]interface{})
-		if !ok2 {
+		jsonObj, ok = val.(map[string]interface{})
+		if !ok {
 			return nil, fmt.Errorf("key '%s' is not an object in JSON", key)
 		}
 	}
