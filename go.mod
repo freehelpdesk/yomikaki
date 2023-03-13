@@ -1,3 +1,3 @@
-module github.com/freehelpdesk/deskjson
+module github.com/freehelpdesk/yomikaki
 
 go 1.20
